@@ -1,15 +1,20 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import dotenv from 'dotenv';
-
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
+import userRoutes from "./routes/UserRoutes.js";
 
 dotenv.config();
+
 const app = express();
-const PORT = process.env.PORT || 3000;
 
+// Middleware
+app.use(express.json());
 
+// DB Connection
+connectDB();
 
-app.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`);
-})
+// Routes
+app.use("/api/users", userRoutes);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
