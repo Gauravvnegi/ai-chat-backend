@@ -26,6 +26,12 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-const UserSignup = mongoose.model("UserSignup", userSchema);
 
-export default UserSignup;
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+
+const UserLoginsDetails = mongoose.model("UserLoginsDetails", userSchema);
+
+export default UserLoginsDetails;
